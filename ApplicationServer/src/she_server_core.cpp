@@ -12,7 +12,7 @@
 #include <sys/time.h>
 #include <mcl/she.hpp>
 
-#include "base64.hpp"
+#include "cpp-base64/base64.h"
 
 #define IOMODE mcl::IoFixedSizeByteSeq
 #define DATABASE 4
@@ -162,7 +162,7 @@ void searchDBwAHE(uint64_t x,uint64_t y,std::vector<uint64_t>& list,PublicKey& p
   std::ofstream ofs(outfile.c_str()); 
   for(int i=0;i<y;i++){
     s = vecAns[i].getStr(IOMODE);
-    t = base64_encode(s.c_str(),s.size());
+    t = base64_encode(reinterpret_cast<const unsigned char *>(s.c_str()),s.size());
     ofs << t << "\n";
   }
   ofs.close();
@@ -233,7 +233,7 @@ void searchDBwSHE(uint64_t x,uint64_t y,uint64_t z,std::vector<uint64_t>& list,P
   std::ofstream ofs(outfile.c_str()); 
   for(int i=0;i<z;i++){
     s = vecGT[i].getStr(IOMODE);
-    t = base64_encode(s.c_str(),s.size());
+    t = base64_encode(reinterpret_cast<const unsigned char *>(s.c_str()),s.size());
     ofs << t << "\n";
   }
   ofs.close();
