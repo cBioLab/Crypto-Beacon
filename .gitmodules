@@ -4,3 +4,12 @@
 [submodule "ApplicationServer/src/cpp-base64"]
 	path = ApplicationServer/src/cpp-base64
 	url = https://github.com/ReneNyffenegger/cpp-base64.git
+[submodule "mcl"]
+	path = mcl
+	url = git://github.com/herumi/mcl
+[submodule "cybozulib"]
+	path = cybozulib
+	url = git://github.com/herumi/cybozulib
+[submodule "xbyak"]
+	path = xbyak
+	url = git://github.com/herumi/xbyak
