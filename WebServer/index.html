@@ -1,78 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Homomorphic Encryption Beacon at NBDC Human Database</title>
-    <link href="./templates/jsn_epic_pro/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
-    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/template.css" type="text/css" />
-    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/template_pro.css" type="text/css" />
-    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/layouts/jsn_wide.css" type="text/css" />
-    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/styles/business.css" type="text/css" />
-    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/colors/blue.css" type="text/css" />
-    <link rel="stylesheet" href="./templates/media/jui/css/bootstrap-extended.css" type="text/css" />
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Crypto Beacon</title>
 
-    <!-- Imported from Shimizu Labo -->
-<!--
-    <link rel="stylesheet" href="mobile.css">
--->
-    <script src="/she-wasm/jquery-3.2.1.min.js"></script>
-    <script src="/she-wasm/she_c.js"></script>
-    <script src="/she-wasm/she.js"></script>
-    <script src="crypt-beacon.js"></script>
+  <script src="/she-wasm/jquery-3.2.1.min.js"></script>
+  <script src="/she-wasm/she_c.js"></script>
+  <script src="/she-wasm/she.js"></script>
+  <script src="crypt-beacon.js"></script>
 </head>
 
-<body id="jsn-master" class="jsn-textstyle-business jsn-color-blue jsn-direction-ltr jsn-desktop jsn-joomla-30  jsn-com-content jsn-view-article jsn-itemid-396 jsn-homepage">
-<a name="top" id="top"></a>
-<div id="jsn-page" class="container">
-<div id="jsn-page-inner">
-
-<div id="jsn-header">
-
-<div class="_menu jsn-modulecontainer">
-<div class="jsn-modulecontainer_inner">
-<div class="jsn-modulecontent">
-
-<p><a href="/en/"><img style="margin-left: 5px; margin-right: 5px;" src="templates/images/nbdc_logo.png" alt="NBDC logo" width="130" height="48" /></a> <img src="templates/images/logo_en.png" alt="logo en" width="280" height="43" /></p>
-
-</div>
-</div>
-
-<div class="clearbreak"></div>
-</div>
-</div> <!--id=jsn-header -->
-
-<div id="jsn-body">
-
-<div id="jsn-menu">
-<div id="jsn-pos-mainmenu" >
-<div class="_menu jsn-modulecontainer">
-<div class="jsn-modulecontainer_inner">
-<div class="jsn-modulecontent">
-
-<span id="jsn-menu-toggle-parent" class="jsn-menu-toggle">
-<i class="fa fa-navicon"></i></span>
-<ul class="menu-mainmenu menu-iconmenu">
-  <li class="jsn-menu-mobile-control"><span class="close-menu"><i class="fa fa-times"></i></span></li>
-  <li class="parent"><a class="clearfix" href="index.html" ><span><span class="jsn-menutitle">Crypto Beacon Home</span></span></a></li>
-  <li class="parent"><a class="clearfix" href="help.html" ><span class="jsn-menutitle">Help</span></a></li>
-</ul>
-<div class="clearbreak"></div>
-</div>
-</div>
-</div>
-</div>
-
-<div class="clearbreak"></div>
-
-</div> <!-- id=jsn-menu -->
-<div id="jsn-mainbody"> 
-
-<div class="jsn-modulecontainer">
-<div class="jsn-modulecontainer_inner">
-<div class="jsn-modulecontent">
-
+<body>
 <h1>Crypto Beacon</h1>
 
 <p>The Crypto Beacon ensures to hide user’s query even against our server. See <a href="help.html">Help</a> for details.</p>
@@ -107,11 +46,10 @@ function enterExample(){
   document.getElementsByName("chromosome")[0].value = "chr12";
   document.getElementsByName("position")[0].value = "112241766";
   document.getElementsByName("nucleotide")[0].value = "A";
-
 } 
 </script>
 
-<p id="status" name="status" class="text-info" style="font-size:10pt;font-weight:bold;width:70%;">Please update your browser to the latest version, or use Chrome/Safari/Firefox, if it does not start initialization within a few seconds.</p>
+<p id="status" name="status">Please update your browser to the latest version, or use Chrome/Safari/Firefox, if it does not start initialization within a few seconds.</p>
 
 <div name="query-form" class="search" style="display: none;">
 
@@ -120,13 +58,11 @@ function enterExample(){
 <p>Enter example:</b> <a href="javascript:enterExample()">ALDH2 Variant (GRCh37, '12:112241766 A')</a>
 </p>
 
-<ul class="form-style-1">
-
 <li>
   <label>Reference Genome</label>
 </li>
 <li>
-  <select id="reference" name="reference" style="width:100px;">
+  <select id="reference" name="reference">
   <option value="GRCh37" selected>GRCh37</option>
   </select>
 </li>
@@ -243,55 +179,12 @@ function enterExample(){
 </tbody>
 </table> 
 
-</div> <!-- jsn-mainbody -->
-</div> <!-- jsn-body -->
-
-<div id="jsn-footer">
-<div id="jsn-footermodules" class="jsn-modulescontainer jsn-modulescontainer2 row-fluid">
-
-<div id="jsn-pos-footer" class="span6">
-<div class="jsn-modulecontainer">
-<div class="jsn-modulecontainer_inner">
-<div class="jsn-modulecontent">
-
 <div>
 <ul class="menu-divmenu">
-<li class="first"><a href="https://biosciencedbc.jp/en/sitepolicies"><span>Site Policies</span></a></li>
-<li><a href="https://humandbs.biosciencedbc.jp/en/contact-us"><span>Contact Us</span></a></li>
 <li class="last"><a href="help.html#supported-browsers"><span>Supported Browsers</span></a></li>
 </ul>
 </div>
 
-<div class="clearbreak"></div>
 
-</div>
-</div>
-</div>
-</div>
-
-<div id="jsn-pos-bottom" class="span6">
-<div class=" jsn-modulecontainer">
-<div class="jsn-modulecontainer_inner">
-<div class="jsn-modulecontent">
-
-<div>
-<p><a href="http://www.jst.go.jp/EN"><img src="templates/images/jst-logo_en.png" alt="logo jst" width="128" /></a></p>
-</div>
-
-<div class="clearbreak"></div>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="clearbreak"></div>
-
-</div>
-</div>
-</div>
-</div>
-</div> <!-- id=jsn-page-inner -->
-</div> <!-- id=jsn-page -->
 </body>
 </html>

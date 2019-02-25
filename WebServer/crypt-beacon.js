@@ -343,12 +343,10 @@ function dec(data) {
 	    let ans = null
 	    if(result[i] == 1){
 		document.getElementsByName("found")[i].innerText = "Found"
-		document.getElementsByName("found")[i].style.backgroundColor = "#32cd32"
-		document.getElementsByName("found")[i].style.color = "white"
+		document.getElementsByName("found")[i].style.color = "#32cd32"
 	    }else{
 		document.getElementsByName("found")[i].innerText = "Not Found"
-		document.getElementsByName("found")[i].style.backgroundColor = "#dc143c"
-		document.getElementsByName("found")[i].style.color = "white"
+		document.getElementsByName("found")[i].style.color =  "#dc143c"
 	    }
 	}
 	document.getElementsByName("status")[0].innerText = "Search done"
