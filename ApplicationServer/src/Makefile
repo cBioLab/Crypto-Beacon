@@ -25,5 +25,5 @@ cpp-base64/base64.o:
 
 she_server_core: $(SHE_OBJS) $(MCL_LIB) $(BASE_OBJ)
 	mkdir -p ../bin/
-	$(CXX) $(SHE_OBJS) $(BASE_OBJ) -o $@ $(LDFLAGS) -fopenmp $(CFLAGS)
+	$(CXX) $(SHE_OBJS) $(BASE_OBJ) -o $@ $(LDFLAGS) -fopenmp
 	mv she_server_core $(TOPDIR)../bin/
