@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Homomorphic Encryption Beacon at NBDC Human Database</title>
+    <link href="./templates/jsn_epic_pro/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/template.css" type="text/css" />
+    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/template_pro.css" type="text/css" />
+    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/layouts/jsn_wide.css" type="text/css" />
+    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/styles/business.css" type="text/css" />
+    <link rel="stylesheet" href="./templates/jsn_epic_pro/css/colors/blue.css" type="text/css" />
+    <link rel="stylesheet" href="./templates/media/jui/css/bootstrap-extended.css" type="text/css" />
+
+    <!-- Imported from Shimizu Labo -->
+<!--
+    <link rel="stylesheet" href="mobile.css">
+-->
+    <script src="/she-wasm/jquery-3.2.1.min.js"></script>
+    <script src="/she-wasm/she_c.js"></script>
+    <script src="/she-wasm/she.js"></script>
+    <script src="crypt-beacon.js"></script>
+</head>
+
+<body id="jsn-master" class="jsn-textstyle-business jsn-color-blue jsn-direction-ltr jsn-desktop jsn-joomla-30  jsn-com-content jsn-view-article jsn-itemid-396 jsn-homepage">
+<a name="top" id="top"></a>
+<div id="jsn-page" class="container">
+<div id="jsn-page-inner">
+
+<div id="jsn-header">
+
+<div class="_menu jsn-modulecontainer">
+<div class="jsn-modulecontainer_inner">
+<div class="jsn-modulecontent">
+
+<p><a href="/en/"><img style="margin-left: 5px; margin-right: 5px;" src="templates/images/nbdc_logo.png" alt="NBDC logo" width="130" height="48" /></a> <img src="templates/images/logo_en.png" alt="logo en" width="280" height="43" /></p>
+
+</div>
+</div>
+
+<div class="clearbreak"></div>
+</div>
+</div> <!--id=jsn-header -->
+
+<div id="jsn-body">
+
+<div id="jsn-menu">
+<div id="jsn-pos-mainmenu" >
+<div class="_menu jsn-modulecontainer">
+<div class="jsn-modulecontainer_inner">
+<div class="jsn-modulecontent">
+
+<span id="jsn-menu-toggle-parent" class="jsn-menu-toggle">
+<i class="fa fa-navicon"></i></span>
+<ul class="menu-mainmenu menu-iconmenu">
+  <li class="jsn-menu-mobile-control"><span class="close-menu"><i class="fa fa-times"></i></span></li>
+  <li class="parent"><a class="clearfix" href="index.html" ><span><span class="jsn-menutitle">Crypto Beacon Home</span></span></a></li>
+  <li class="parent"><a class="clearfix" href="help.html" ><span class="jsn-menutitle">Help</span></a></li>
+</ul>
+<div class="clearbreak"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="clearbreak"></div>
+
+</div> <!-- id=jsn-menu -->
+<div id="jsn-mainbody"> 
+
+<div class="jsn-modulecontainer">
+<div class="jsn-modulecontainer_inner">
+<div class="jsn-modulecontent">
+
+<h1>Crypto Beacon</h1>
+
+<p>The Crypto Beacon ensures to hide user’s query even against our server. See <a href="help.html">Help</a> for details.</p>
+
+<style type="text/css">
+.form-style-1 {
+    margin: 10px auto;
+#    max-width: 400px;
+    padding: 0px 0px 0px 10px;
+}
+.form-style-1 li {
+    padding: 0;
+    display: block;
+    list-style: none;
+    margin: 10px 0 0 0;
+}
+.form-style-1 label{
+    margin: 5px 0 -5px 0;
+    padding:0px;
+    display:block;
+    font-weight: bold;
+    list-style: none;
+}
+select {
+    height: 30px;
+    line-height: 30px;
+}
+</style>
+
+<script type="text/javascript">
+function enterExample(){
+  document.getElementsByName("chromosome")[0].value = "chr12";
+  document.getElementsByName("position")[0].value = "112241766";
+  document.getElementsByName("nucleotide")[0].value = "A";
+
+} 
+</script>
+
+<p id="status" name="status" class="text-info" style="font-size:10pt;font-weight:bold;width:70%;">Please update your browser to the latest version, or use Chrome/Safari/Firefox, if it does not start initialization within a few seconds.</p>
+
+<div name="query-form" class="search" style="display: none;">
+
+<h3>Query Form</h3>
+
+<p>Enter example:</b> <a href="javascript:enterExample()">ALDH2 Variant (GRCh37, '12:112241766 A')</a>
+</p>
+
+<ul class="form-style-1">
+
+<li>
+  <label>Reference Genome</label>
+</li>
+<li>
+  <select id="reference" name="reference" style="width:100px;">
+  <option value="GRCh37" selected>GRCh37</option>
+  </select>
+</li>
+
+<li>
+  <label>Chromosome</label>
+</li>
+<li>
+  <select id="chromosome" name="chromosome">
+    <option value='' disabled selected style='display:none;'>Select Chromosome</option>
+    <option value="chr1">Chromosome 1</option>
+    <option value="chr2">Chromosome 2</option>
+    <option value="chr3">Chromosome 3</option>
+    <option value="chr4">Chromosome 4</option>
+    <option value="chr5">Chromosome 5</option>
+    <option value="chr6">Chromosome 6</option>
+    <option value="chr7">Chromosome 7</option>
+    <option value="chr8">Chromosome 8</option>
+    <option value="chr9">Chromosome 9</option>
+    <option value="chr10">Chromosome 10</option>
+    <option value="chr11">Chromosome 11</option>
+    <option value="chr12">Chromosome 12</option>
+    <option value="chr13">Chromosome 13</option>
+    <option value="chr14">Chromosome 14</option>
+    <option value="chr15">Chromosome 15</option>
+    <option value="chr16">Chromosome 16</option>
+    <option value="chr17">Chromosome 17</option>
+    <option value="chr18">Chromosome 18</option>
+    <option value="chr19">Chromosome 19</option>
+    <option value="chr20">Chromosome 20</option>
+    <option value="chr21">Chromosome 21</option>
+    <option value="chr22">Chromosome 22</option>
+    <option value="chrX">Chromosome X</option>
+    <option value="chrY">Chromosome Y</option>
+    <option value="chrM">Chromosome M</option>
+  </select>
+
+  <form name="check" action="">
+    <input type="radio" name="protect" id="public" checked>Send Chromosome Number
+    <input type="radio" name="protect" id="private" >Hide Chromosome Number
+    </form>
+    <p>
+      (We recommed to search with "Send" option. "Hide" option requires around 180 sec for a single search.)
+    </p>  
+</li>
+
+<li>
+  <label>Base Position</label>
+</li>
+<li>
+  <input type="text" name="position" class="inputbox jsn-input-xlarge-fluid" value="" placeholder="Enter 1-based position">  (e.g. 112241766) 
+<li>
+<li>
+  <label>Alternative Allele</label>
+</li>
+<li>
+   <select id="chromosome" name="nucleotide">
+     <option value='' disabled selected style='display:none; width=5px;'>Select Alternative allele</option>
+     <option value="A">A</option>
+     <option value="T">T</option>
+     <option value="G">G</option>
+     <option value="C">C</option>
+  </select>
+</li>
+</ul>
+
+<div class="clearbreak" style="margin: 20px;"></div>
+
+<p>  
+<button type="button" class="button btn btn-primary" onclick="send()" name="sendbutton" disabled>Send an Encrypted Beacon</button>
+</p>
+
+<div class="clearbreak" style="margin: 20px;"></div>
+
+<h3>Response by Dataset</h3>
+
+<table class="table-style style-greystripes"> 
+<thead>
+  <tr>
+  <th style="text-align:center">Dataset</th>
+  <th style="text-align:center">Found</th>
+  <th style="text-align:center">Link to Download Site</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+  <td>hum0013.v1.freq.v1</td>
+  <td style="text-align:center">
+  <span name="found">&mdash;</span> 
+  </td>
+  <td><a href="/en/hum0013-v1">http://humandbs.biosciencedbc.jp/en/hum0013-v1</a></td>
+  </tr>
+  <tr>
+  <td>hum0014.v3.T2DM.1.v1</td>
+  <td style="text-align:center">
+  <span name="found">&mdash;</span> 
+  </td>
+  <td><a href="/en/hum0014-v3">http://humandbs.biosciencedbc.jp/en/hum0014-v3</a></td>
+  </tr>
+  <tr>
+  <td>hum0015.v1.freq.v1</td>
+  <td style="text-align:center">
+  <span name="found">&mdash;</span> 
+  </td>
+  <td><a href="/en/hum0015-v1">http://humandbs.biosciencedbc.jp/en/hum0015-v1</a></td>
+  </tr>
+  <tr>
+  <td>hum0029.v1.freq.v1</td>
+  <td style="text-align:center">
+  <span name="found">&mdash;</span> 
+  </td>
+  <td><a href="/en/hum0029-v1">http://humandbs.biosciencedbc.jp/en/hum0029-v1</a></td>
+  </tr>
+</tbody>
+</table> 
+
+</div> <!-- jsn-mainbody -->
+</div> <!-- jsn-body -->
+
+<div id="jsn-footer">
+<div id="jsn-footermodules" class="jsn-modulescontainer jsn-modulescontainer2 row-fluid">
+
+<div id="jsn-pos-footer" class="span6">
+<div class="jsn-modulecontainer">
+<div class="jsn-modulecontainer_inner">
+<div class="jsn-modulecontent">
+
+<div>
+<ul class="menu-divmenu">
+<li class="first"><a href="https://biosciencedbc.jp/en/sitepolicies"><span>Site Policies</span></a></li>
+<li><a href="https://humandbs.biosciencedbc.jp/en/contact-us"><span>Contact Us</span></a></li>
+<li class="last"><a href="help.html#supported-browsers"><span>Supported Browsers</span></a></li>
+</ul>
+</div>
+
+<div class="clearbreak"></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div id="jsn-pos-bottom" class="span6">
+<div class=" jsn-modulecontainer">
+<div class="jsn-modulecontainer_inner">
+<div class="jsn-modulecontent">
+
+<div>
+<p><a href="http://www.jst.go.jp/EN"><img src="templates/images/jst-logo_en.png" alt="logo jst" width="128" /></a></p>
+</div>
+
+<div class="clearbreak"></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="clearbreak"></div>
+
+</div>
+</div>
+</div>
+</div>
+</div> <!-- id=jsn-page-inner -->
+</div> <!-- id=jsn-page -->
+</body>
+</html>
