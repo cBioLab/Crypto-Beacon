@@ -1,0 +1,6 @@
+[submodule "WebServer/she-wasm"]
+	path = WebServer/she-wasm
+	url = https://github.com/herumi/she-wasm.git
+[submodule "ApplicationServer/src/cpp-base64"]
+	path = ApplicationServer/src/cpp-base64
+	url = https://github.com/ReneNyffenegger/cpp-base64.git
