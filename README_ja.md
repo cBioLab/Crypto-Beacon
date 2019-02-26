@@ -53,4 +53,4 @@ Webページ上で検索対象を指定し，クエリをアプリケーショ�
     cd Crypto-Beacon/ApplicationServer
     node she_server.js
 
-上記の2つのサーバを起動した後，ブラウザでhttp://localhostにアクセスすることでデモを確認することができます．
+上記の2つのサーバを起動した後，ブラウザでhttp://localhost にアクセスすることでデモを確認することができます．
