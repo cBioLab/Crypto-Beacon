@@ -17,5 +17,18 @@ Webページ上で検索対象を指定し，クエリをアプリケーショ�
 
 # インストール方法
 ### 本リポジトリはブラウザ，Webサーバ,アプリケーションサーバ全てが同一マシンで動作している状況を想定している．(設定を変更することで別マシンで動作させることは可能)
-* Webサーバ : WebServerフォルダ内のREADME.md参照
-* アプリケーションサーバ : ApplicationServerフォルダ内のREADME.md参照
+
+## 最初に行う操作
+   sudo apt install libgmp-dev libssl-dev
+   git clone --recursive https://github.com/cBioLab/Crypto-Beacon.git
+
+## Webサーバのインストール
+   cd Crypto-Beacon/WebServer
+   ./init.sh
+
+## アプリケーションサーバのインストール
+   cd Crypto-Beacon/ApplicationServer/src
+   make
+   cd ..
+   mkdir tmp
+   npm install express body-parser morgan
