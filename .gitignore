@@ -1,2 +1,5 @@
 *.o
 *.wasm
+ApplicationServer/tmp/*
+ApplicationServer/bin/*
+ApplicationServer/node_modules/*
