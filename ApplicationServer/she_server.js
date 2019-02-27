@@ -26,7 +26,8 @@ app.post('/', function (req, res){
     let isSHE = 1
     let chr = req.body.chr
     let query = true
-
+    let database = process.argv[2]
+    
     if(chrflag == "true"){
 	isPrivate = 1
 	if(chr != 0){
@@ -51,13 +52,13 @@ app.post('/', function (req, res){
 	zkp_vecG2 = req.body.zkp_vecG2
 	cGT = req.body.cGT
 	isSHE = 1
-	input = String(chr) + "\n" + String(isPrivate) + "\n"+ String(isSHE) + "\n" + pub + "\n" + vecG1.join("\n") + "\n" + vecG2.join("\n") + "\n" + cGT + "\n" + zkp_vecG1.join("\n") + "\n" + zkp_vecG2.join("\n")
+	input = String(chr) + "\n" + String(isPrivate) + "\n"+ String(isSHE) + "\n" + database + "\n" + pub + "\n" + vecG1.join("\n") + "\n" + vecG2.join("\n") + "\n" + cGT + "\n" + zkp_vecG1.join("\n") + "\n" + zkp_vecG2.join("\n")
     }else if(HEflag == "false"){
 	vecG1 = req.body.vecG1
 	zkp_vecG1 = req.body.zkp_vecG1
 	cG1 = req.body.cG1
 	isSHE = 0
-	input = String(chr) + "\n" + String(isPrivate) + "\n"+ String(isSHE) + "\n" + pub + "\n" + vecG1.join("\n") + "\n" + cG1 + "\n" + zkp_vecG1.join("\n")
+	input = String(chr) + "\n" + String(isPrivate) + "\n"+ String(isSHE) + "\n" + database + "\n" + pub + "\n" + vecG1.join("\n") + "\n" + cG1 + "\n" + zkp_vecG1.join("\n")
     }else{
 	console.log("error HEflag")
 	query = false
