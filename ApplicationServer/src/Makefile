@@ -1,7 +1,7 @@
 TOPDIR:=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))/
 CFLAGS= -O3 -g
 CFLAGS+= -I$(TOPDIR)include -I$(TOPDIR)../../cybozulib/include/ -I$(TOPDIR)../../mcl/include -I$(TOPDIR)../../xbyak/  -I$(TOPDIR)cpp-base64/
-LDFLAGS+= -lgmp -lgmpxx  -L../../mcl/lib/ -lcrypto -lmcl
+LDFLAGS+= -lgmp -lgmpxx  -L$(TOPDIR)../../mcl/lib/ -lcrypto -lmcl
 
 BASE_OBJ=cpp-base64/base64.o
 SHE_OBJS=she_server_core.o
