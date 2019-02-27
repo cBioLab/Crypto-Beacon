@@ -80,12 +80,9 @@ app.post('/', function (req, res){
 	    }else{
 		console.log("fin exec");
 		try{
-		    let vecAns0 = execSync('cat ' + stdout + '0',{cwd:"./bin",maxBuffer :500*1024*1024}).toString().split('\n')
-		    let vecAns1 = execSync('cat ' + stdout + '1',{cwd:"./bin",maxBuffer :500*1024*1024}).toString().split('\n')
-		    let vecAns2 = execSync('cat ' + stdout + '2',{cwd:"./bin",maxBuffer :500*1024*1024}).toString().split('\n')
-		    let vecAns3 = execSync('cat ' + stdout + '3',{cwd:"./bin",maxBuffer :500*1024*1024}).toString().split('\n')
+		    let vecAns = execSync('cat ans_' + stdout,{cwd:"./bin",maxBuffer :500*1024*1024}).toString().split('\n')
 		    res.writeHead(200, { 'Content-Type': 'application/json' });
-		    res.end(JSON.stringify({'status':"ok" ,'vecAns0': vecAns0,'vecAns1': vecAns1,'vecAns2': vecAns2,'vecAns3': vecAns3}));
+		    res.end(JSON.stringify({'status':"ok" ,'vecAns': vecAns}));
 		}catch(err){
 		    console.log("error cat files")
 		    console.log(err)

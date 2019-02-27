@@ -15,7 +15,7 @@
 #include "cpp-base64/base64.h"
 
 #define IOMODE mcl::IoFixedSizeByteSeq
-#define DATABASE 4
+#define DATABASE 1
 
 using namespace mcl::she;
 using namespace mcl::bn;
@@ -274,47 +274,46 @@ int main(int argc,char* argv[]){
 
   uint64_t mid,M;
   std::ifstream ifs(argv[1]);
-  std::vector<uint64_t> l[DATABASE];
+  std::vector<uint64_t> l;
   ifs >> chr;
   ifs >> chrflag;
   ifs >> HEflag;
-  for(int d=0;d<DATABASE;d++){
-    if(chrflag){
-      uint64_t total_M;
-      std::string posPATH = "pos" + tostr(d) + "/";
-      std::string listLen = posPATH + "M.dat";
-      std::string MPATH = dataPATH + listLen;
-      std::ifstream ifsM(MPATH.c_str());
-      ifsM >> total_M;
-      ifsM.close();
-      l[d].resize(total_M);
-      total_M = 0;
-      uint64_t sum_len = 0;
-      for(int i=1;i<=25;i++){
-	std::string fileName = posPATH + tostr(i) + ".pos";
-	std::string filePATH = dataPATH + fileName;
-	std::ifstream ifsfile(filePATH.c_str());
-	uint64_t M;
-	ifsfile >> M;
-	for(int j=0;j<M;j++){
-	  ifsfile >> l[d][j+total_M];
-	  l[d][j+total_M] += sum_len;
-	}
-	total_M += M;
-	sum_len += chrnt[i-1] * 4;
-	ifsfile.close();
-      }
-    }else{
-      std::string posPATH = "pos" + tostr(d) + "/";
-      std::string fileName = posPATH + tostr(chr) + ".pos";
+  std::string posPATH;
+  ifs >> posPATH;
+  
+  if(chrflag){
+    uint64_t total_M;
+    std::string MFileName = posPATH + "M.dat";
+    std::string MPATH = dataPATH + MFileName;
+    std::ifstream ifsM(MPATH.c_str());
+    ifsM >> total_M;
+    ifsM.close();
+    l.resize(total_M);
+    total_M = 0;
+    uint64_t sum_len = 0;
+    for(int i=1;i<=25;i++){
+      std::string fileName = posPATH + tostr(i) + ".pos";
       std::string filePATH = dataPATH + fileName;
       std::ifstream ifsfile(filePATH.c_str());
       uint64_t M;
       ifsfile >> M;
-      l[d].resize(M);
-      for(int i=0;i<M;i++){
-	ifsfile >> l[d][i];
+      for(int j=0;j<M;j++){
+	ifsfile >> l[j+total_M];
+	l[j+total_M] += sum_len;
       }
+      total_M += M;
+      sum_len += chrnt[i-1] * 4;
+      ifsfile.close();
+    }
+  }else{
+    std::string fileName = posPATH + tostr(chr) + ".pos";
+    std::string filePATH = dataPATH + fileName;
+    std::ifstream ifsfile(filePATH.c_str());
+    uint64_t M;
+    ifsfile >> M;
+    l.resize(M);
+    for(int i=0;i<M;i++){
+      ifsfile >> l[i];
     }
   }
 
@@ -402,17 +401,13 @@ int main(int argc,char* argv[]){
   ifs.close();
 
   //HEflag,chrflagの区別をすれば拡張可能
-  omp_set_nested(2);
-  omp_set_num_threads(4);
-  #pragma omp parallel for
-  for(int i=0;i<DATABASE;i++){
-    std::string outfile = argv[1] + tostr(i);
-    if(HEflag){
-      searchDBwSHE(lengthG1,lengthG2,lengthGT,l[i],pub,G1Vec,G2Vec,cGT,outfile);
-    }else{
-      searchDBwAHE(lengthX,lengthY,l[i],pub,G1Vec,cG1,outfile);
-    }
+  std::string outfile = std::string("ans_") + argv[1];
+  if(HEflag){
+    searchDBwSHE(lengthG1,lengthG2,lengthGT,l,pub,G1Vec,G2Vec,cGT,outfile);
+  }else{
+    searchDBwAHE(lengthX,lengthY,l,pub,G1Vec,cG1,outfile);
   }
+
 
   return 0;
 }

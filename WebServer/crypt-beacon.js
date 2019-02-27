@@ -29,7 +29,7 @@ let lengthX = 0
 let lengthY = 0
 let posX = 0
 let posY = 0
-const num_of_database = 4
+const num_of_database = 1
 
 she.init(0).then(() => {
     document.getElementsByName("status")[0].innerText = "Initializing query..."
@@ -321,21 +321,15 @@ function send(){
 
 function dec(data) {
     if(data.status == "ok"){
-	let result = [null,null,null,null]
-	let ct = [null,null,null,null]
+	let result = [null]
+	let ct = [null]
 
 	if(HEflag){
 	    for(let i=0;i<num_of_database;i++) ct[i] = new she.CipherTextGT()
-	    ct[0].deserialize(new Uint8Array(atob(data.vecAns0[posGT]).split("").map(function(c) {return c.charCodeAt(0); })))
-	    ct[1].deserialize(new Uint8Array(atob(data.vecAns1[posGT]).split("").map(function(c) {return c.charCodeAt(0); })))
-	    ct[2].deserialize(new Uint8Array(atob(data.vecAns2[posGT]).split("").map(function(c) {return c.charCodeAt(0); })))
-	    ct[3].deserialize(new Uint8Array(atob(data.vecAns3[posGT]).split("").map(function(c) {return c.charCodeAt(0); })))
+	    ct[0].deserialize(new Uint8Array(atob(data.vecAns[posGT]).split("").map(function(c) {return c.charCodeAt(0); })))
 	}else{
 	    for(let i=0;i<num_of_database;i++) ct[i] = new she.CipherTextG1()
-	    ct[0].deserialize(new Uint8Array(atob(data.vecAns0[posY]).split("").map(function(c) {return c.charCodeAt(0); })))
-	    ct[1].deserialize(new Uint8Array(atob(data.vecAns1[posY]).split("").map(function(c) {return c.charCodeAt(0); })))
-	    ct[2].deserialize(new Uint8Array(atob(data.vecAns2[posY]).split("").map(function(c) {return c.charCodeAt(0); })))
-	    ct[3].deserialize(new Uint8Array(atob(data.vecAns3[posY]).split("").map(function(c) {return c.charCodeAt(0); })))
+	    ct[0].deserialize(new Uint8Array(atob(data.vecAns[posY]).split("").map(function(c) {return c.charCodeAt(0); })))
 	}
 	for(let i=0;i<num_of_database;i++){
 	    result[i] = sec.dec(ct[i])
