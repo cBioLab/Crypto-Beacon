@@ -81,7 +81,7 @@ app.post('/', function (req, res){
 	    }else{
 		console.log("fin exec");
 		try{
-		    let vecAns = execSync('cat ans_' + stdout,{cwd:"./bin",maxBuffer :500*1024*1024}).toString().split('\n')
+		    let vecAns = execSync('cat ' + stdout + ".ans",{cwd:"./bin",maxBuffer :500*1024*1024}).toString().split('\n')
 		    res.writeHead(200, { 'Content-Type': 'application/json' });
 		    res.end(JSON.stringify({'status':"ok" ,'vecAns': vecAns}));
 		}catch(err){

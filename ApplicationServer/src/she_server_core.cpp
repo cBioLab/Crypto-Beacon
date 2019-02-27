@@ -259,7 +259,7 @@ int main(int argc,char* argv[]){
   std::vector<uint64_t> chrnt;
   chrnt.resize(25);
   for(int i=0;i<25;i++){
-    for(int j=0;j<4;j++){
+    for(int j=0;j<2;j++){
       if(j == 1){
 	ifstsv >> chrnt[i];
 	total_len += chrnt[i];
@@ -280,6 +280,7 @@ int main(int argc,char* argv[]){
   ifs >> HEflag;
   std::string posPATH;
   ifs >> posPATH;
+  posPATH += '/';
   
   if(chrflag){
     uint64_t total_M;
@@ -401,7 +402,7 @@ int main(int argc,char* argv[]){
   ifs.close();
 
   //HEflag,chrflagの区別をすれば拡張可能
-  std::string outfile = std::string("ans_") + argv[1];
+  std::string outfile = argv[1] + std::string(".ans");
   if(HEflag){
     searchDBwSHE(lengthG1,lengthG2,lengthGT,l,pub,G1Vec,G2Vec,cGT,outfile);
   }else{
