@@ -22,5 +22,5 @@ clean:
 
 she_server_core: $(MCL_LIB) $(BASE_OBJ) $(SHE_OBJS)
 	mkdir -p ../bin/
-	$(CXX) $(SHE_OBJS) $(BASE_OBJ) $(LDFLAGS) -o $@ -fopenmp
+	$(CXX) $(SHE_OBJS) $(BASE_OBJ) $(MCL_LIB) $(LDFLAGS)  -o $@ -fopenmp
 	mv she_server_core $(TOPDIR)../bin/
