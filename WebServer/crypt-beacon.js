@@ -32,6 +32,7 @@ let posY = 0
 const num_of_database = 1
 
 she.init(0).then(() => {
+    gettime("begin init")
     document.getElementsByName("status")[0].innerText = "Initializing query..."
     setTimeout(()=>{
 	setinfo()
@@ -46,7 +47,8 @@ she.init(0).then(() => {
 	    ppub.init(pub)
 	    document.getElementsByName("status")[0].innerText = 'Fill in the form below and click "Send an Encrypted Beacon" button.'
 	    document.getElementsByName("sendbutton")[0].disabled = false
-	    document.getElementsByName("query-form")[0].style.display = "block" 
+	    document.getElementsByName("query-form")[0].style.display = "block"
+	    gettime("finish init")
 	},100);
     },100);
 })
@@ -215,21 +217,17 @@ function sort(){
 	zkp_vecG1.splice(posX,1,zkp_oneG1)
 	cG1 = btoa(String.fromCharCode.apply(null,ppub.encG1(posY).serialize()))
 	console.log("vecG1 len " + vecG1.length)
-	//console.log(cG1)
     }
 }
 
-function gettime(){
-    var Nowymdhms　=　new Date();
-    var NowYear = Nowymdhms.getYear() + 1900;
-    var NowMon = Nowymdhms.getMonth() + 1;
-    var NowDay = Nowymdhms.getDate();
-    var NowWeek = Nowymdhms.getDay();
-    var NowHour = Nowymdhms.getHours();
-    var NowMin = Nowymdhms.getMinutes();
-    var NowSec = Nowymdhms.getSeconds();
-    myMsg = NowYear+"年"+NowMon+"月"+NowDay+"日"+NowHour+"時"+NowMin+"分"+NowSec+"秒";
-    console.log(myMsg);
+function gettime(log_msg){
+    var now_time = new Date();
+    var now_hour = now_time.getHours();
+    var now_min = now_time.getMinutes();
+    var now_sec = now_time.getSeconds();
+    var now_msec = now_time.getMilliseconds();
+    log_msg += " > " + now_hour + ":" + now_min + ":" + now_sec + "." + now_msec;
+    console.log(log_msg);
 }
 
 function getdevice(){
@@ -243,10 +241,8 @@ function getdevice(){
 }
 
 function post() {
-    console.log("post")
     document.getElementsByName("status")[0].innerText = "Now searching..."
     if(chrflag) chr = 0
-    gettime()
     $.ajax({
 	url: 'http://localhost:3000',
         type: 'POST',
@@ -265,13 +261,14 @@ function post() {
         dataType: 'json',
     }).done(function( data, textStatus, jqXHR ) {
         console.log(data)
-	gettime()
+	gettime("receive result")
+	gettime("begin dec")
 	dec(data)
+	gettime("finish dec")
     }).fail(function( jqXHR, textStatus, errorThrown) {
         console.log("error")
 	document.getElementsByName("status")[0].innerText = "Search failed"
     }).always(function( jqXHR, textStatus) {
-        console.log("fin")
 	vecG1 = []
 	vecG2 = []
 	zkp_vecG1 = []
@@ -279,11 +276,12 @@ function post() {
 	cG1 = null
 	cGT = null
 	document.getElementsByName("sendbutton")[0].disabled = false
+	gettime("finish search")
     });
 }
 
 function send(){
-    console.log("send")
+    gettime("begin search")
     for(let i=0;i<num_of_database;i++){
 	document.getElementsByName("found")[i].innerText = "-"
 	document.getElementsByName("found")[i].style.backgroundColor = "white"
@@ -304,8 +302,11 @@ function send(){
 	}
         document.getElementsByName("sendbutton")[0].disabled = true
 	setTimeout(()=>{
+	    gettime("begin enc")
             enc()
+	    gettime("finish enc")
             sort()
+	    gettime("send query")
             post()
 	},100)
     }else if(retcode == 4){
