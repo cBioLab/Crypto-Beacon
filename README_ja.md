@@ -51,6 +51,10 @@ Webページ上で検索対象を指定し，クエリをアプリケーショ�
 ## アプリケーションサーバの起動
 
     cd Crypto-Beacon/ApplicationServer
-    node she_server.js
+    node she_server.js dummy0  #dummy0.bedをデータベースとする
 
 上記の2つのサーバを起動した後，ブラウザでhttp://localhost:8080 にアクセスすることでデモを確認することができます．
+
+# データの説明
+
+## bedファイル→posファイル
