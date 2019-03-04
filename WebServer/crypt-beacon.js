@@ -30,9 +30,11 @@ let lengthY = 0
 let posX = 0
 let posY = 0
 const num_of_database = 1
+let s_enc,e_enc,s_dec,e_dec,s_init,e_init
 
 she.init(0).then(() => {
     gettime("begin init")
+    s_init = new Date()
     document.getElementsByName("status")[0].innerText = "Initializing query..."
     setTimeout(()=>{
 	setinfo()
@@ -49,6 +51,8 @@ she.init(0).then(() => {
 	    document.getElementsByName("sendbutton")[0].disabled = false
 	    document.getElementsByName("query-form")[0].style.display = "block"
 	    gettime("finish init")
+	    e_init = new Date()
+	    document.getElementsByName("init_time")[0].innerText = timeToStr(e_init-s_init)
 	},100);
     },100);
 })
@@ -230,6 +234,11 @@ function gettime(log_msg){
     console.log(log_msg);
 }
 
+function timeToStr(d_time){
+    time_msg = d_time/1000;
+    return time_msg;
+}
+
 function getdevice(){
     var ua = navigator.userAgent;
     device = 'pc'
@@ -263,8 +272,11 @@ function post() {
         console.log(data)
 	gettime("receive result")
 	gettime("begin dec")
+	s_dec = new Date()
 	dec(data)
 	gettime("finish dec")
+	e_dec = new Date()
+	document.getElementsByName("dec_time")[0].innerText = timeToStr(e_dec-s_dec)
     }).fail(function( jqXHR, textStatus, errorThrown) {
         console.log("error")
 	document.getElementsByName("status")[0].innerText = "Search failed"
@@ -288,6 +300,14 @@ function send(){
 	document.getElementsByName("found")[i].style.color = "black"
 	document.getElementsByName("found")[i].style.padding = "5px"
     }
+    document.getElementsByName("enc_time")[0].innerText = "-"
+    document.getElementsByName("enc_time")[0].style.backgroundColor = "white"
+    document.getElementsByName("enc_time")[0].style.color = "black"
+    document.getElementsByName("enc_time")[0].style.padding = "5px"
+    document.getElementsByName("dec_time")[0].innerText = "-"
+    document.getElementsByName("dec_time")[0].style.backgroundColor = "white"
+    document.getElementsByName("dec_time")[0].style.color = "black"
+    document.getElementsByName("dec_time")[0].style.padding = "5px"
     var retcode = calcPos()
     var msg = { 1 : "Select Chromosome", 2 : "Enter Base Position", 3 : "Select Alternative Allele" }
     if(retcode == 0){
@@ -303,8 +323,11 @@ function send(){
         document.getElementsByName("sendbutton")[0].disabled = true
 	setTimeout(()=>{
 	    gettime("begin enc")
+	    s_enc = new Date()
             enc()
 	    gettime("finish enc")
+	    e_enc = new Date()
+	    document.getElementsByName("enc_time")[0].innerText = timeToStr(e_enc-s_enc)
             sort()
 	    gettime("send query")
             post()
