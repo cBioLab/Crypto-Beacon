@@ -32,30 +32,61 @@ let posY = 0
 const num_of_database = 1
 let s_enc,e_enc,s_dec,e_dec,s_init,e_init
 
-she.init(0).then(() => {
-    gettime("begin init")
-    s_init = new Date()
+gettime("begin init")
+s_init = new Date()
+setTimeout(()=>{
     document.getElementsByName("status")[0].innerText = "Initializing query..."
     setTimeout(()=>{
 	setinfo()
+	document.getElementsByName("status")[0].innerText = "Loading table..."
+	initShe(0)
+    },100);
+},100);
+
+function initShe (curveType) {
+    const initSecPub = () => {
 	sec = new she.SecretKey()
 	sec.setByCSPRNG()
 	sec.dump('sec=')
 	pub = sec.getPublicKey()
 	pub.dump('pub=')
-	document.getElementsByName("status")[0].innerText = "Loading table..."
-	setTimeout(()=>{
-	    ppub = new she.PrecomputedPublicKey()
-	    ppub.init(pub)
-	    document.getElementsByName("status")[0].innerText = 'Fill in the form below and click "Send an Encrypted Beacon" button.'
-	    document.getElementsByName("sendbutton")[0].disabled = false
-	    document.getElementsByName("query-form")[0].style.display = "block"
-	    gettime("finish init")
-	    e_init = new Date()
-	    document.getElementsByName("init_time")[0].innerText = timeToStr(e_init-s_init)
-	},100);
-    },100);
-})
+	console.log(`curveType=${curveType}`)
+    }
+    she.init(curveType).then(() => {
+	if(curveType == 0){
+	    fetch('https://herumi.github.io/she-dlp-table/she-dlp-0-20-gt.bin')
+		.then(res => res.arrayBuffer())
+		.then(buffer => {
+		    const a = new Uint8Array(buffer)
+		    she.loadTableForGTDLP(a)
+		    console.log('load Table done')
+		    initSecPub(she)
+		    
+		    ppub = new she.PrecomputedPublicKey()
+		    ppub.init(pub)
+		    document.getElementsByName("status")[0].innerText = 'Fill in the form below and click "Send an Encrypted Beacon" button.'
+		    document.getElementsByName("sendbutton")[0].disabled = false
+		    document.getElementsByName("query-form")[0].style.display = "block"
+		    gettime("finish init")
+		    e_init = new Date()
+		    document.getElementsByName("init_time")[0].innerText = timeToStr(e_init-s_init)
+		})
+	}else{
+		    initSecPub(she)
+		    
+		    ppub = new she.PrecomputedPublicKey()
+		    ppub.init(pub)
+		    document.getElementsByName("status")[0].innerText = 'Fill in the form below and click "Send an Encrypted Beacon" button.'
+		    document.getElementsByName("sendbutton")[0].disabled = false
+		    document.getElementsByName("query-form")[0].style.display = "block"
+		    gettime("finish init")
+		    e_init = new Date()
+		    document.getElementsByName("init_time")[0].innerText = timeToStr(e_init-s_init)
+
+	}
+    })
+}
+
 
 function setinfo(){
     chrnum.chr1 = 1
