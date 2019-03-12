@@ -32,16 +32,19 @@ let posY = 0
 const num_of_database = 1
 let s_enc,e_enc,s_dec,e_dec,s_init,e_init
 
-gettime("begin init")
-s_init = new Date()
 setTimeout(()=>{
-    document.getElementsByName("status")[0].innerText = "Initializing query..."
-    setTimeout(()=>{
-	setinfo()
-	document.getElementsByName("status")[0].innerText = "Loading table..."
-	initShe(0)
-    },100);
-},100);
+    Promise.resolve()
+	.then(function(){
+	    gettime("begin init")
+	    s_init = new Date()
+	}).then(function(){
+	    document.getElementsByName("status")[0].innerText = "Initializing query..."
+	}).then(function(){
+	    setinfo()
+	    document.getElementsByName("status")[0].innerText = "Loading table..."
+	    initShe(0)
+	})
+},10)
 
 function initShe (curveType) {
     const initSecPub = () => {
@@ -153,33 +156,37 @@ function setinfo(){
 function enc(){
     if(HEflag){
 	let [c , zkp] = ppub.encWithZkpBinG1(1)
+	//let c = ppub.encG1(1)
 	oneG1 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
 	zkp_oneG1 = window.btoa(String.fromCharCode.apply(null,zkp.serialize()))
 	for(let i = 0;i<lengthX;i++){
 	    [c , zkp] = ppub.encWithZkpBinG1(0)
-	    vecG1.push(btoa(String.fromCharCode.apply(null,c.serialize())))
-	    zkp_vecG1.push(btoa(String.fromCharCode.apply(null,zkp.serialize())))
+	    //let c = ppub.encG1(0)
+	    vecG1.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
+	    zkp_vecG1.push(window.btoa(String.fromCharCode.apply(null,zkp.serialize())))
 	}
 	[c , zkp] = ppub.encWithZkpBinG2(1)
-	oneG2 = btoa(String.fromCharCode.apply(null,c.serialize()))
+	oneG2 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
 	zkp_oneG2 = window.btoa(String.fromCharCode.apply(null,zkp.serialize()))
 	for(let i = 0;i<lengthY;i++){
 	    [c , zkp] = ppub.encWithZkpBinG2(0)
-	    vecG2.push(btoa(String.fromCharCode.apply(null,c.serialize())))
-	    zkp_vecG2.push(btoa(String.fromCharCode.apply(null,zkp.serialize())))
+	    vecG2.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
+	    zkp_vecG2.push(window.btoa(String.fromCharCode.apply(null,zkp.serialize())))
 	}
-	console.log("vecG1 len" + vecG1.length)
-	console.log("vecG2 len" + vecG2.length)
+	console.log("vecG1 len : " + vecG1.length)
+	console.log("vecG2 len : " + vecG2.length)
     }else{
 	let [c , zkp] = ppub.encWithZkpBinG1(1)
-	oneG1 = btoa(String.fromCharCode.apply(null,c.serialize()))
+	//let c = ppub.encG1(1)
+	oneG1 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
 	zkp_oneG1 = window.btoa(String.fromCharCode.apply(null,zkp.serialize()))
 	for(let i = 0;i<lengthX;i++){
 	    [c , zkp] = ppub.encWithZkpBinG1(0)
-	    vecG1.push(btoa(String.fromCharCode.apply(null,c.serialize())))
-	    zkp_vecG1.push(btoa(String.fromCharCode.apply(null,zkp.serialize())))
+	    //c = ppub.encG1(0)
+	    vecG1.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
+	    zkp_vecG1.push(window.btoa(String.fromCharCode.apply(null,zkp.serialize())))
 	}
-	console.log("vecG1 len" + vecG1.length)
+	console.log("vecG1 len : " + vecG1.length)
     }
 }
 
@@ -243,8 +250,8 @@ function sort(){
 	vecG2.splice(posG2,1,oneG2)
 	zkp_vecG2.splice(posG2,1,zkp_oneG2)
 	cGT = btoa(String.fromCharCode.apply(null,ppub.encGT(posGT).serialize()))
-	console.log("vecG1 len " + vecG1.length)
-	console.log("vecG2 len " + vecG2.length)
+	console.log("vecG1 len : " + vecG1.length)
+	console.log("vecG2 len : " + vecG2.length)
     }else{
 	console.log("posX : " + posX)
 	console.log("posY : " + posY)
@@ -324,61 +331,65 @@ function post() {
 }
 
 function send(){
-    gettime("begin search")
-    for(let i=0;i<num_of_database;i++){
-	document.getElementsByName("found")[i].innerText = "-"
-	document.getElementsByName("found")[i].style.backgroundColor = "white"
-	document.getElementsByName("found")[i].style.color = "black"
-	document.getElementsByName("found")[i].style.padding = "5px"
-    }
-    document.getElementsByName("enc_time")[0].innerText = "-"
-    document.getElementsByName("enc_time")[0].style.backgroundColor = "white"
-    document.getElementsByName("enc_time")[0].style.color = "black"
-    document.getElementsByName("enc_time")[0].style.padding = "5px"
-    document.getElementsByName("dec_time")[0].innerText = "-"
-    document.getElementsByName("dec_time")[0].style.backgroundColor = "white"
-    document.getElementsByName("dec_time")[0].style.color = "black"
-    document.getElementsByName("dec_time")[0].style.padding = "5px"
-    var retcode = calcPos()
-    var msg = { 1 : "Select Chromosome", 2 : "Enter Base Position", 3 : "Select Alternative Allele" }
-    if(retcode == 0){
-        calcEachPos()
-	getdevice()
-	if(device == 'iPhone'){
-	    document.getElementsByName("status")[0].innerText = "Encrypting query... (This may take 10 to 25 sec for your device (iPad or iPhone))"
-	}else if(device == 'Android'){
-	    document.getElementsByName("status")[0].innerText = "Encrypting query... (This may take 30 to 60 sec for your device (Android device) )"
-	}else{
-	    document.getElementsByName("status")[0].innerText = "Encrypting query..."
-	}
-        document.getElementsByName("sendbutton")[0].disabled = true
-	setTimeout(()=>{
-	    gettime("begin enc")
-	    s_enc = new Date()
-            enc()
-	    gettime("finish enc")
-	    e_enc = new Date()
-	    document.getElementsByName("enc_time")[0].innerText = timeToStr(e_enc-s_enc)
-            sort()
-	    gettime("send query")
-            post()
-	},100)
-    }else if(retcode == 4){
-        console.log("input error")
-        let chr = chrnum[document.getElementsByName("chromosome")[0].value]
-        let maxposition = chrnt[chr]
-        document.getElementsByName("status")[0].innerText = "Enter Vaild Base Position (0 < position <= " + maxposition + ")"
-    }else{
-        console.log("input error")
-        document.getElementsByName("status")[0].innerText = msg[retcode] 
-    }
+    Promise.resolve()
+	.then(function(){
+	    gettime("begin search")
+	    for(let i=0;i<num_of_database;i++){
+		document.getElementsByName("found")[i].innerText = "-"
+		document.getElementsByName("found")[i].style.backgroundColor = "white"
+		document.getElementsByName("found")[i].style.color = "black"
+		document.getElementsByName("found")[i].style.padding = "5px"
+	    }
+	    document.getElementsByName("enc_time")[0].innerText = "-"
+	    document.getElementsByName("enc_time")[0].style.backgroundColor = "white"
+	    document.getElementsByName("enc_time")[0].style.color = "black"
+	    document.getElementsByName("enc_time")[0].style.padding = "5px"
+	    document.getElementsByName("dec_time")[0].innerText = "-"
+	    document.getElementsByName("dec_time")[0].style.backgroundColor = "white"
+	    document.getElementsByName("dec_time")[0].style.color = "black"
+	    document.getElementsByName("dec_time")[0].style.padding = "5px"
+	    var retcode = calcPos()
+	    var msg = { 1 : "Select Chromosome", 2 : "Enter Base Position", 3 : "Select Alternative Allele" }
+	    if(retcode == 0){
+		calcEachPos()
+		getdevice()
+		if(device == 'iPhone'){
+		    document.getElementsByName("status")[0].innerText = "Encrypting query... (This may take 10 to 25 sec for your device (iPad or iPhone))"
+		}else if(device == 'Android'){
+		    document.getElementsByName("status")[0].innerText = "Encrypting query... (This may take 30 to 60 sec for your device (Android device) )"
+		}else{
+		    document.getElementsByName("status")[0].innerText = "Encrypting query..."
+		}
+		document.getElementsByName("sendbutton")[0].disabled = true
+		return retcode
+	    }else if(retcode == 4){
+		console.log("input error")
+		let chr = chrnum[document.getElementsByName("chromosome")[0].value]
+		let maxposition = chrnt[chr]
+		document.getElementsByName("status")[0].innerText = "Enter Vaild Base Position (0 < position <= " + maxposition + ")"
+	    }else{
+		console.log("input error")
+		document.getElementsByName("status")[0].innerText = msg[retcode] 
+	    }
+	}).then(function(retcode){
+	    if(retcode == 0){
+		gettime("begin enc")
+		s_enc = new Date()
+		enc()
+		gettime("finish enc")
+		e_enc = new Date()
+		document.getElementsByName("enc_time")[0].innerText = timeToStr(e_enc-s_enc)
+		sort()
+		gettime("send query")
+		post()
+	    }
+	})
 }
 
 function dec(data) {
     if(data.status == "ok"){
 	let result = [null]
 	let ct = [null]
-
 	if(HEflag){
 	    for(let i=0;i<num_of_database;i++) ct[i] = new she.CipherTextGT()
 	    ct[0].deserialize(new Uint8Array(atob(data.vecAns[posGT]).split("").map(function(c) {return c.charCodeAt(0); })))
