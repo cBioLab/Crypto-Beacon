@@ -31,12 +31,14 @@ let posX = 0
 let posY = 0
 const num_of_database = 1
 let s_enc,e_enc,s_dec,e_dec,s_init,e_init
+let zkpflag = false
 
 setTimeout(()=>{
     Promise.resolve()
 	.then(function(){
 	    gettime("begin init")
-	    s_init = new Date()
+		s_init = new Date()
+		zkpflag = ((document.getElementsByName("zkpflag")[0].value) == "on")
 	}).then(function(){
 	    document.getElementsByName("status")[0].innerText = "Initializing query..."
 	}).then(function(){
@@ -155,38 +157,58 @@ function setinfo(){
 
 function enc(){
     if(HEflag){
-	let [c , zkp] = ppub.encWithZkpBinG1(1)
-	//let c = ppub.encG1(1)
-	oneG1 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
-	zkp_oneG1 = window.btoa(String.fromCharCode.apply(null,zkp.serialize()))
-	for(let i = 0;i<lengthX;i++){
-	    [c , zkp] = ppub.encWithZkpBinG1(0)
-	    //let c = ppub.encG1(0)
-	    vecG1.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
-	    zkp_vecG1.push(window.btoa(String.fromCharCode.apply(null,zkp.serialize())))
-	}
-	[c , zkp] = ppub.encWithZkpBinG2(1)
-	oneG2 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
-	zkp_oneG2 = window.btoa(String.fromCharCode.apply(null,zkp.serialize()))
-	for(let i = 0;i<lengthY;i++){
-	    [c , zkp] = ppub.encWithZkpBinG2(0)
-	    vecG2.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
-	    zkp_vecG2.push(window.btoa(String.fromCharCode.apply(null,zkp.serialize())))
-	}
-	console.log("vecG1 len : " + vecG1.length)
-	console.log("vecG2 len : " + vecG2.length)
+		if(zkpflag){
+			let [c , zkp] = ppub.encWithZkpBinG1(1)
+			oneG1 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
+			zkp_oneG1 = window.btoa(String.fromCharCode.apply(null,zkp.serialize()))
+			for(let i = 0;i<lengthX;i++){
+	    		[c , zkp] = ppub.encWithZkpBinG1(0)
+	    		vecG1.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
+	    		zkp_vecG1.push(window.btoa(String.fromCharCode.apply(null,zkp.serialize())))
+			}
+			[c , zkp] = ppub.encWithZkpBinG2(1)
+			oneG2 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
+			zkp_oneG2 = window.btoa(String.fromCharCode.apply(null,zkp.serialize()))
+			for(let i = 0;i<lengthY;i++){
+	    		[c , zkp] = ppub.encWithZkpBinG2(0)
+	    		vecG2.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
+	    		zkp_vecG2.push(window.btoa(String.fromCharCode.apply(null,zkp.serialize())))
+			}
+		}else{
+			let c = ppub.encG1(1)
+			oneG1 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
+			for(let i = 0;i<lengthX;i++){
+	    		c = ppub.encG1(0)
+	    		vecG1.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
+			}
+			c = ppub.encG2(1)
+			oneG2 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
+			for(let i = 0;i<lengthY;i++){
+	    		c = ppub.encG2(0)
+	    		vecG2.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
+			}
+		}
+		console.log("vecG1 len : " + vecG1.length)
+		console.log("vecG2 len : " + vecG2.length)
     }else{
-	let [c , zkp] = ppub.encWithZkpBinG1(1)
-	//let c = ppub.encG1(1)
-	oneG1 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
-	zkp_oneG1 = window.btoa(String.fromCharCode.apply(null,zkp.serialize()))
-	for(let i = 0;i<lengthX;i++){
-	    [c , zkp] = ppub.encWithZkpBinG1(0)
-	    //c = ppub.encG1(0)
-	    vecG1.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
-	    zkp_vecG1.push(window.btoa(String.fromCharCode.apply(null,zkp.serialize())))
-	}
-	console.log("vecG1 len : " + vecG1.length)
+		if(zkpflag){
+			let [c , zkp] = ppub.encWithZkpBinG1(1)
+			oneG1 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
+			zkp_oneG1 = window.btoa(String.fromCharCode.apply(null,zkp.serialize()))
+			for(let i = 0;i<lengthX;i++){
+	    		[c , zkp] = ppub.encWithZkpBinG1(0)
+	    		vecG1.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
+	    		zkp_vecG1.push(window.btoa(String.fromCharCode.apply(null,zkp.serialize())))
+			}
+		}else{
+			let c = ppub.encG1(1)
+			oneG1 = window.btoa(String.fromCharCode.apply(null,c.serialize()))
+			for(let i = 0;i<lengthX;i++){
+	    		c = ppub.encG1(0)
+	    		vecG1.push(window.btoa(String.fromCharCode.apply(null,c.serialize())))
+			}
+		}	
+		console.log("vecG1 len : " + vecG1.length)
     }
 }
 
