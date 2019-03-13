@@ -16,6 +16,7 @@
 
 #define IOMODE mcl::IoFixedSizeByteSeq
 #define DATABASE 1
+//#define USEZKP
 
 using namespace mcl::she;
 using namespace mcl::bn;
@@ -322,9 +323,11 @@ int main(int argc,char* argv[]){
 
   std::vector<CipherTextG1> G1Vec;
   std::vector<CipherTextG2> G2Vec;
+#ifdef USEZKP 
   std::vector<ZkpBin> zkp_G1Vec;
   std::vector<ZkpBin> zkp_G2Vec;
-
+#endif
+  
   if(HEflag){
     mid = std::ceil(std::pow(std::ceil(total_len / 18),(1.0/3)));
     lengthGT = mid;
@@ -332,13 +335,17 @@ int main(int argc,char* argv[]){
     lengthG2 = mid * 6;
     G1Vec.resize(lengthG1);
     G2Vec.resize(lengthG2);
+#ifdef USEZKP
     zkp_G1Vec.resize(lengthG1);
     zkp_G2Vec.resize(lengthG2);
+#endif
   }else{
     lengthX = 10000;
     lengthY = std::ceil(total_len/2500.0);
     G1Vec.resize(lengthX);
+#ifdef USEZKP 
     zkp_G1Vec.resize(lengthX);
+#endif 
   }
   
   ifs >> inputline;
@@ -359,6 +366,7 @@ int main(int argc,char* argv[]){
     ifs >> inputline;
     binput = base64_decode(inputline);
     cGT.setStr(binput,IOMODE);
+#ifdef USEZKP
     for(int i=0;i<lengthG1;i++){
       ifs >> inputline;
       binput = base64_decode(inputline);
@@ -379,6 +387,7 @@ int main(int argc,char* argv[]){
       ifs.close();
       return -1;
     }
+#endif
   }else{
     for(int i=0;i<lengthX;i++){
       ifs >> inputline;
@@ -388,6 +397,7 @@ int main(int argc,char* argv[]){
     ifs >> inputline;
     binput = base64_decode(inputline);
     cG1.setStr(binput,IOMODE);
+#ifdef USEZKP
     for(int i=0;i<lengthX;i++){
       ifs >> inputline;
       binput = base64_decode(inputline);
@@ -398,6 +408,7 @@ int main(int argc,char* argv[]){
       ifs.close();
       return -1;
     }
+#endif
   }
   ifs.close();
 
@@ -408,7 +419,6 @@ int main(int argc,char* argv[]){
   }else{
     searchDBwAHE(lengthX,lengthY,l,pub,G1Vec,cG1,outfile);
   }
-
 
   return 0;
 }
