@@ -3,3 +3,9 @@
 ApplicationServer/tmp/*
 ApplicationServer/bin/*
 ApplicationServer/node_modules/*
+ApplicationServer/data/NBDC/*
+ApplicationServer/data/hum0013/*
+ApplicationServer/data/hum0014/*
+ApplicationServer/data/hum0015/*
+ApplicationServer/data/hum0029/*
+ApplicationServer/data/ex_bed/*.bed
