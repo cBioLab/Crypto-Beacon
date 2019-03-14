@@ -30,20 +30,20 @@ let lengthY = 0
 let posX = 0
 let posY = 0
 const num_of_database = 1
-let s_enc,e_enc,s_dec,e_dec,s_init,e_init
+let s_enc,e_enc,s_dec,e_dec,s_init,e_init,s_total
 let zkpflag = false
 
 setTimeout(()=>{
     Promise.resolve()
 	.then(function(){
 	    gettime("begin init")
-		s_init = new Date()
-		zkpflag = ((document.getElementsByName("zkpflag")[0].value) == "on")
-	}).then(function(){
+	    s_init = new Date()
+	    zkpflag = ((document.getElementsByName("zkpflag")[0].value) == "on")
 	    document.getElementsByName("status")[0].innerText = "Initializing query..."
 	}).then(function(){
-	    setinfo()
 	    document.getElementsByName("status")[0].innerText = "Loading table..."
+	}).then(function(){
+	    setinfo()
 	    initShe(0)
 	})
 },10)
@@ -337,6 +337,7 @@ function post() {
 	gettime("finish dec")
 	e_dec = new Date()
 	document.getElementsByName("dec_time")[0].innerText = timeToStr(e_dec-s_dec)
+	document.getElementsByName("total_time")[0].innerText = timeToStr(e_dec-s_total)
     }).fail(function( jqXHR, textStatus, errorThrown) {
         console.log("error")
 	document.getElementsByName("status")[0].innerText = "Search failed"
@@ -352,24 +353,32 @@ function post() {
     });
 }
 
+
+function inittable(table_name){
+    document.getElementsByName(table_name)[0].innerText = "-"
+    document.getElementsByName(table_name)[0].style.backgroundColor = "white"
+    document.getElementsByName(table_name)[0].style.color = "black"
+    document.getElementsByName(table_name)[0].style.padding = "5px"
+}
+
+function reflow(elem){
+    elem.offsetHeight;
+}
+
+
 function send(){
     Promise.resolve()
 	.then(function(){
+	    s_total = new Date()
+	    document.getElementsByName("sendbutton")[0].disabled = true
+	}).then(function(){
 	    gettime("begin search")
-	    for(let i=0;i<num_of_database;i++){
-		document.getElementsByName("found")[i].innerText = "-"
-		document.getElementsByName("found")[i].style.backgroundColor = "white"
-		document.getElementsByName("found")[i].style.color = "black"
-		document.getElementsByName("found")[i].style.padding = "5px"
-	    }
-	    document.getElementsByName("enc_time")[0].innerText = "-"
-	    document.getElementsByName("enc_time")[0].style.backgroundColor = "white"
-	    document.getElementsByName("enc_time")[0].style.color = "black"
-	    document.getElementsByName("enc_time")[0].style.padding = "5px"
-	    document.getElementsByName("dec_time")[0].innerText = "-"
-	    document.getElementsByName("dec_time")[0].style.backgroundColor = "white"
-	    document.getElementsByName("dec_time")[0].style.color = "black"
-	    document.getElementsByName("dec_time")[0].style.padding = "5px"
+	    inittable("found")
+	    inittable("enc_time")
+	    inittable("dec_time")
+	    inittable("total_time")
+	    reflow(document.getElementsByName("sendbutton")[0])
+	}).then(function(){
 	    var retcode = calcPos()
 	    var msg = { 1 : "Select Chromosome", 2 : "Enter Base Position", 3 : "Select Alternative Allele" }
 	    if(retcode == 0){
@@ -382,18 +391,20 @@ function send(){
 		}else{
 		    document.getElementsByName("status")[0].innerText = "Encrypting query..."
 		}
-		document.getElementsByName("sendbutton")[0].disabled = true
-		return retcode
 	    }else if(retcode == 4){
 		console.log("input error")
 		let chr = chrnum[document.getElementsByName("chromosome")[0].value]
 		let maxposition = chrnt[chr]
 		document.getElementsByName("status")[0].innerText = "Enter Vaild Base Position (0 < position <= " + maxposition + ")"
+		document.getElementsByName("sendbutton")[0].disabled = false
 	    }else{
 		console.log("input error")
-		document.getElementsByName("status")[0].innerText = msg[retcode] 
+		document.getElementsByName("status")[0].innerText = msg[retcode]
+		document.getElementsByName("sendbutton")[0].disabled = false
 	    }
+	    return retcode
 	}).then(function(retcode){
+	    setTimeout(()=>{
 	    if(retcode == 0){
 		gettime("begin enc")
 		s_enc = new Date()
@@ -405,6 +416,7 @@ function send(){
 		gettime("send query")
 		post()
 	    }
+	    },1)
 	})
 }
 
