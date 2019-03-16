@@ -57,38 +57,16 @@ function initShe (curveType) {
 	pub.dump('pub=')
 	console.log(`curveType=${curveType}`)
     }
-    she.init(curveType).then(() => {
-	if(curveType == 0){
-	    fetch('https://herumi.github.io/she-dlp-table/she-dlp-0-20-gt.bin')
-		.then(res => res.arrayBuffer())
-		.then(buffer => {
-		    const a = new Uint8Array(buffer)
-		    she.loadTableForGTDLP(a)
-		    console.log('load Table done')
-		    initSecPub(she)
-		    
-		    ppub = new she.PrecomputedPublicKey()
-		    ppub.init(pub)
-		    document.getElementsByName("status")[0].innerText = 'Fill in the form below and click "Send an Encrypted Beacon" button.'
-		    document.getElementsByName("sendbutton")[0].disabled = false
-		    document.getElementsByName("query-form")[0].style.display = "block"
-		    gettime("finish init")
-		    e_init = new Date()
-		    document.getElementsByName("init_time")[0].innerText = timeToStr(e_init-s_init)
-		})
-	}else{
-		    initSecPub(she)
-		    
-		    ppub = new she.PrecomputedPublicKey()
-		    ppub.init(pub)
-		    document.getElementsByName("status")[0].innerText = 'Fill in the form below and click "Send an Encrypted Beacon" button.'
-		    document.getElementsByName("sendbutton")[0].disabled = false
-		    document.getElementsByName("query-form")[0].style.display = "block"
-		    gettime("finish init")
-		    e_init = new Date()
-		    document.getElementsByName("init_time")[0].innerText = timeToStr(e_init-s_init)
-
-	}
+    she.init(curveType,2,1).then(() => {
+	initSecPub(she)
+	ppub = new she.PrecomputedPublicKey()
+	ppub.init(pub)
+	document.getElementsByName("status")[0].innerText = 'Fill in the form below and click "Send an Encrypted Beacon" button.'
+	document.getElementsByName("sendbutton")[0].disabled = false
+	document.getElementsByName("query-form")[0].style.display = "block"
+	gettime("finish init")
+	e_init = new Date()
+	document.getElementsByName("init_time")[0].innerText = timeToStr(e_init-s_init)
     })
 }
 
