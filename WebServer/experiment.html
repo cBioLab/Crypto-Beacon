@@ -3,328 +3,37 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Crypto Beacon experiment</title>
+  <title>Crypto Beacon</title>
 
   <script src="/she-wasm/jquery-3.2.1.min.js"></script>
   <script src="/she-wasm/she_c.js"></script>
   <script src="/she-wasm/she.js"></script>
-  <script src="crypt-beacon.js"></script>
 </head>
 
 <body>
+<h1>Crypto Beacon experiment</h1>
 
-<table class="table-style style-greystripes"> 
-<thead>
-  <tr>
-  <th style="text-align:center">chr</th>
-  <th style="text-align:center">enc time</th>
-  <th style="text-align:center">dec time</th>
-  <th style="text-align:center">total time</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-    <td>1</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>2</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>3</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>4</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>5</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>6</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>7</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>8</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>9</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>10</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>11</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>12</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>13</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>14</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>15</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>16</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>17</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>18</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>19</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>20</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>21</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>22</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>X</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>Y</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-  <tr>
-    <td>M</td>
-    <td style="text-align:center">
-      <span name="enc_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="dec_time">&mdash;</span> 
-    </td>
-    <td style="text-align:center">
-      <span name="total_time">&mdash;</span> 
-    </td>
-  </tr>
-</tbody>
-</table> 
+  <table class="table-style style-greystripes">
+    <thead>
+      <tr>
+	<th style="text-align:center">chr</th>
+	<th style="text-align:center">enc-time</th>
+	<th style="text-align:center">dec-time</th>
+	<th style="text-align:center">total-time</th>
+      </tr>
+    </thead>
+    <tbody id="tbodyID">
+      <script type="text/javascript">
+        for (var i = 1; i <= 25; i++) {
+			     document.write("<tr>")
+			     document.write("<td style=\"text-align:center\"><span name=\"enc_time\">&mdash;</span></td>")
+			     document.write("<td style=\"text-align:center\"><span name=\"dec_time\">&mdash;</span></td>")
+			     document.write("<td style=\"text-align:center\"><span name=\"total_time\">&mdash;</span></td>") 
+			     document.write("</tr>");
+        }
+      </script>
+    </tbody>
+  </table>
 
 </body>
 </html>

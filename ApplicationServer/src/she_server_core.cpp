@@ -173,7 +173,7 @@ void searchDBwSHE(uint64_t x,uint64_t y,uint64_t z,std::vector<uint64_t>& list,P
   std::vector<CipherTextGT> vecGT;
   vecGT.resize(z);
   omp_set_nested(1);
-  omp_set_num_threads(6);
+  omp_set_num_threads(20);
   #pragma omp parallel for
   for(int i=0;i<z;i++){
     uint64_t p = x*y*i;

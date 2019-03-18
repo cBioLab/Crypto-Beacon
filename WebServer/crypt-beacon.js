@@ -291,7 +291,7 @@ function post() {
     document.getElementsByName("status")[0].innerText = "Now searching..."
     if(chrflag) chr = 0
     $.ajax({
-	url: 'http://localhost:3000',
+	url: 'http://venus.cbio.cs.waseda.ac.jp:3000',
         type: 'POST',
 	data: {
 	    'pub': btoa(String.fromCharCode.apply(null,pub.serialize())),
