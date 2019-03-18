@@ -329,10 +329,10 @@ int main(int argc,char* argv[]){
 #endif
   
   if(HEflag){
-    mid = std::ceil(std::pow(std::ceil(total_len / 18),(1.0/3)));
-    lengthGT = mid;
-    lengthG1 = mid * 12;
-    lengthG2 = mid * 6;
+    uint64_t dataSize = total_len * 4;
+    lengthG1 = std::ceil(std::pow(48*dataSize,1.0/3));
+    lengthG2 = std::ceil(std::pow(6*dataSize,1.0/3));
+    lengthGT = dataSize/lengthG1/lengthG2 + 1;
     G1Vec.resize(lengthG1);
     G2Vec.resize(lengthG2);
 #ifdef USEZKP

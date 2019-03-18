@@ -222,9 +222,9 @@ function calcEachPos(){
     }
     console.log("pos : " + pos)
     if(HEflag){
-	let mid = Math.ceil(Math.pow(Math.ceil(total_len / 18),(1/3)))
-	lengthX = 12 * mid
-	lengthY = 6 * mid
+	let dataSize = total_len * 4
+	lengthX = Math.ceil(Math.pow(48*dataSize,1/3))
+	lengthY = Math.ceil(Math.pow(6*dataSize,1/3))
 	console.log("lengthG1 : " + lengthX)
 	console.log("lengthG2 : " + lengthY)
 	posG1 = pos % lengthX
