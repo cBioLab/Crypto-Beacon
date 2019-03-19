@@ -12,13 +12,16 @@
 </head>
 
 <body>
-  <table class="table-style style-greystripes">
+  <table class="table-style style-greystripes" border="1">
     <thead>
       <tr>
-	<th style="text-align:center">chr</th>
-	<th style="text-align:center">enc-time</th>
-	<th style="text-align:center">dec-time</th>
-	<th style="text-align:center">total-time</th>
+	<th style="text-align:center"> chr </th>
+	<th style="text-align:center"> enc-time [s] </th>
+	<th style="text-align:center"> dec-time [s] </th>
+	<th style="text-align:center"> total-time [s] </th>
+	<th style="text-align:center"> num of G1 </th>
+	<th style="text-align:center"> num of G2 </th>
+	<th style="text-align:center"> num of GT </th>
       </tr>
     </thead>
     <tbody id="tbodyID">
@@ -32,7 +35,11 @@
 			     }
 			     document.write("<td style=\"text-align:center\"><span name=\"enc_time\">&mdash;</span></td>")
 			     document.write("<td style=\"text-align:center\"><span name=\"dec_time\">&mdash;</span></td>")
-			     document.write("<td style=\"text-align:center\"><span name=\"total_time\">&mdash;</span></td>") 
+			     document.write("<td style=\"text-align:center\"><span name=\"total_time\">&mdash;</span></td>")
+			     document.write("<td style=\"text-align:center\"><span name=\"num_of_G1\">&mdash;</span></td>")
+			     document.write("<td style=\"text-align:center\"><span name=\"num_of_G2\">&mdash;</span></td>")
+			     document.write("<td style=\"text-align:center\"><span name=\"num_of_GT\">&mdash;</span></td>") 
+
 			     document.write("</tr>");
         }
       </script>

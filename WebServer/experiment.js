@@ -224,6 +224,9 @@ function calcEachPos(){
 	posG1 = pos % lengthX
 	posG2 = (pos / lengthX | 0) % lengthY
 	posGT = pos / (lengthX*lengthY) | 0
+	document.getElementsByName("num_of_G1")[25].innerText = lengthX
+	document.getElementsByName("num_of_G2")[25].innerText = lengthY
+	document.getElementsByName("num_of_GT")[25].innerText = Math.ceil(dataSize/lengthX/lengthY) + 1
     }else{
 	lengthX = 10000
 	lengthY = Math.ceil(parseInt(chrnt[chr]) * 4 / lengthX)
@@ -231,6 +234,7 @@ function calcEachPos(){
 	console.log("lengthY : " + lengthY)
 	posX = pos % lengthX
 	posY = pos / lengthX | 0
+	document.getElementsByName("num_of_G1")[chr-1].innerText = lengthX + lengthY + 1
     }
 }
 
