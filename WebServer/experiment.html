@@ -12,8 +12,6 @@
 </head>
 
 <body>
-<h1>Crypto Beacon experiment</h1>
-
   <table class="table-style style-greystripes">
     <thead>
       <tr>
@@ -25,9 +23,13 @@
     </thead>
     <tbody id="tbodyID">
       <script type="text/javascript">
-        for (var i = 1; i <= 25; i++) {
-           document.write("<tr>")
-           document.write("<td style=\"text-align:center\">", i ,"</td>") 
+        for (var i = 1; i <= 26; i++) {
+			     document.write("<tr>")
+			     if(i != 26){
+			     document.write("<td style=\"text-align:center\">", i ,"</td>")
+			     }else{
+			     document.write("<td style=\"text-align:center\">all</td>")
+			     }
 			     document.write("<td style=\"text-align:center\"><span name=\"enc_time\">&mdash;</span></td>")
 			     document.write("<td style=\"text-align:center\"><span name=\"dec_time\">&mdash;</span></td>")
 			     document.write("<td style=\"text-align:center\"><span name=\"total_time\">&mdash;</span></td>") 

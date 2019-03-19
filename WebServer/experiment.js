@@ -42,12 +42,14 @@ Promise.resolve()
 	    setinfo()
 	    initShe(0)
 	}).then(function(){
-		chr = 1
-		nt = 1
-		position = 10
-		chrflag = false //染色体公開オプション用
-    	HEflag = chrflag //true : SHE, false : AHE ←染色体公開するかとHEの切り替えをわけるならここ
+	    chr = 1
+	    nt = 1
+	    position = 10
+	    chrflag = false //染色体公開オプション用
+    	    HEflag = chrflag //true : SHE, false : AHE ←染色体公開するかとHEの切り替えをわけるならここ
+	    setTimeout(()=>{
 		send()
+	    },3000)
 	})
 
 function initShe (curveType) {
@@ -188,6 +190,7 @@ function enc(){
 }
 
 function calcPos(){
+    if(HEflag) chr = 12
     console.log("chr : " + chr)
     console.log("position : " + position)
     console.log("nucleotide : " + nt)
@@ -294,8 +297,13 @@ function post() {
 	dec(data)
 	gettime("finish dec")
 	e_dec = new Date()
-	document.getElementsByName("dec_time")[chr-1].innerText = timeToStr(e_dec-s_dec)
-	document.getElementsByName("total_time")[chr-1].innerText = timeToStr(e_dec-s_total)
+	if(HEflag){
+	    document.getElementsByName("dec_time")[25].innerText = timeToStr(e_dec-s_dec)
+	    document.getElementsByName("total_time")[25].innerText = timeToStr(e_dec-s_total)
+	}else{
+	    document.getElementsByName("dec_time")[chr-1].innerText = timeToStr(e_dec-s_dec)
+	    document.getElementsByName("total_time")[chr-1].innerText = timeToStr(e_dec-s_total)
+	}
     }).fail(function( jqXHR, textStatus, errorThrown) {
         console.log("error")
     }).always(function( jqXHR, textStatus) {
@@ -307,7 +315,14 @@ function post() {
 	cGT = null
 	gettime("finish search")
 	chr = chr + 1
-	if(chr <= 25) send()
+	if(!HEflag){
+	    if(chr <= 25) send()
+	    if(chr == 26){
+		HEflag = true
+		chrflag = true
+		send()
+	    }
+	}
     });
 }
 
@@ -326,19 +341,21 @@ function send(){
 	    }
 	    return retcode
 	}).then(function(retcode){
-	    setTimeout(()=>{
 	    if(retcode == 0){
 		gettime("begin enc")
 		s_enc = new Date()
 		enc()
 		gettime("finish enc")
 		e_enc = new Date()
-		document.getElementsByName("enc_time")[chr-1].innerText = timeToStr(e_enc-s_enc)
+		if(HEflag){
+		    document.getElementsByName("enc_time")[25].innerText = timeToStr(e_enc-s_enc)
+		}else{
+		    document.getElementsByName("enc_time")[chr-1].innerText = timeToStr(e_enc-s_enc)
+		}
 		sort()
 		gettime("send query")
 		post()
 	    }
-	    },1)
 	})
 }
 
