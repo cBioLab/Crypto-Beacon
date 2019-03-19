@@ -53,8 +53,29 @@ Webページ上で検索対象を指定し，クエリをアプリケーショ�
     cd Crypto-Beacon/ApplicationServer
     node she_server.js dummy0  #dummy0.bedをデータベースとする
 
-上記の2つのサーバを起動した後，ブラウザでhttp://localhost:8080 にアクセスすることでデモを確認することができます．
+上記の2つのサーバを起動した後，ブラウザでhttp://localhost:8080 にアクセスすることでデモを確認することができる．
 
 # データの説明
 
 ## bedファイル→posファイル
+
+    cd Crypto-Beacon/ApplicationServer/data
+    mkdir [directory for posfile]
+    python bed2list.py GRCh37.tsv [bedfile].bed [directory for posfile]
+
+dummy0のデータベースは以下のコマンドで作成した．
+
+    cd Crypto-Beacon/ApplicationServer/data
+    mkdir dummy0
+    python bed2list.py GRCh37.tsv bed/dummy0.bed dummy0/
+
+## posファイルの仕様
+
+1行目 総要素数 (N)
+    2行目 1番目の要素
+    ・・・
+    N+1行目 N番目の要素
+
+* i.posはi番目の染色体の情報。(23がchrX,24がchrY,25がchrM)
+* i.posのk番目の要素をe(i,k)とすると、e(i,k)/4が染色体上の座標、e(i,k)mod4が変異を表している(A:0,C:1,G:2,T:3)。
+* 例えば、e(23,k) = 1001 => chrXの250番目の塩基にCの変異が存在する
