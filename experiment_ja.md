@@ -10,9 +10,11 @@
 
 ## 実験に用いたデータの説明
 + 人工データ
-ApplicationServer/data/ex_bed/makeSampleBED.py を用いてbedファイルを生成した．総塩基数に対してどのくらいの割合で置換を発生させるかを指定し，ランダムでbedファイルを生成した．その後，bed2list.pyを用いてposファイルに変換し実験を行った．
+    - ApplicationServer/data/ex_bed/makeSampleBED.py を用いてbedファイルを生成した．
+    - 総塩基数に対してどのくらいの割合で置換を発生させるかを指定し，ランダムでbedファイルを生成した．
+    - bed2list.pyを用いてposファイルに変換し実験を行った．
 + 実データ
-4種類の実データのbedファイルをbed2list.pyを用いてそれぞれposファイルに変換し実験を行った．
+    - 4種類の実データのbedファイルをbed2list.pyを用いてそれぞれposファイルに変換し，実験を行った．
 
 ## 実験環境
 
@@ -30,3 +32,10 @@ ApplicationServer/data/ex_bed/makeSampleBED.py を用いてbedファイルを生
         - ブラウザ : Google Chrome
         - CPU : Intel(R) Core(TM) i5-7Y54 CPU @ 1.20GHz
         - RAM : 8GB
+
+## パラメータの説明
+
++ 2乗根の場合
+    - PCでおよそ3秒，iphoneでも5秒程度(ゼロ知識証明なしの場合)と比較的短い時間で暗号化が終わるように，送信する暗号文の個数を10000個に固定した．
++ 3乗根の場合
+    - ゼロ知識証明がない場合に最も通信量が少なくなる値にした．
