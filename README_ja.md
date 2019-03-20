@@ -60,6 +60,11 @@ Webページ上で検索対象を指定し，クエリをアプリケーショ�
 + WebServer/crypt-beacon.jsのl.294，'http://localhost' を 'http://[アプリケーションサーバのIPアドレス]' に変更する
 + ブラウザでhttp://[WebサーバのIPアドレス]:8080 にアクセスする
 
+**ゼロ知識証明を利用する場合**
+
++ WebServer/index.htmlのl.111,'name="zkpflag" value="off"'を'name="zkpflag" value="on"'に変更する
++ ApplicationServer/src/she_server_core.cppのl.19，'//#define USEZKP'を'#define USEZKP'に変更する
+
 # データの説明
 
 ## bedファイル→posファイル
