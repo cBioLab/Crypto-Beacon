@@ -56,10 +56,7 @@ Webページ上で検索対象を指定し，クエリをアプリケーショ�
 
 **Webサーバ，アプリケーションサーバ，ブラウザをそれぞれ別のマシンで動作させる場合**
 
-+ WebServer/crypt-beacon.js
-    l.294  url: 'http://localhost:3000' #編集前
-    l.294  url: 'http://[アプリケーションサーバのIPアドレス]:3000' #編集後
-
++ WebServer/crypt-beacon.jsのl.294，'http://localhost:3000'を'http://[アプリケーションサーバのIPアドレス]:3000'に変更する
 + ブラウザでhttp://[WebサーバのIPアドレス]:8080 にアクセスする
 
 # データの説明
@@ -69,8 +66,8 @@ Webページ上で検索対象を指定し，クエリをアプリケーショ�
     cd Crypto-Beacon/ApplicationServer/data
     mkdir [directory for posfile]
     python bed2list.py GRCh37.tsv [bedfile].bed [directory for posfile]
-    # GRCh37.tsvは各染色体の塩基数を記録している．ここを変更した場合はWebServer/crypt-beacon.js内のパラメータも変更する必要がある．
 
+GRCh37.tsvは各染色体の塩基数を記録している．ここを変更した場合はWebServer/crypt-beacon.js内のパラメータも変更する必要がある．
 dummy0のデータベースは以下のコマンドで作成した．
 
     cd Crypto-Beacon/ApplicationServer/data
