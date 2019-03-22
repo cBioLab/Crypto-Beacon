@@ -31,7 +31,7 @@ let posX = 0
 let posY = 0
 const num_of_database = 1
 let s_enc,e_enc,s_dec,e_dec,s_init,e_init,s_total
-let zkpflag = false
+let zkpflag = true
 
 
 Promise.resolve()
