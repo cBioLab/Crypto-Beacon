@@ -129,6 +129,13 @@ uint64_t setPoint(std::vector<uint64_t> &v,uint64_t p){
 void searchDBwAHE(uint64_t x,uint64_t y,std::vector<uint64_t>& list,PublicKey& pub,std::vector<CipherTextG1>& G1Vec,CipherTextG1& cG1,std::string& outfile){
   std::vector<CipherTextG1> vecAns;
   vecAns.resize(y);
+#ifdef USEZKP
+  CipherTextG1 inputCheckG1;
+  pub.enc(inputCheckG1,-1);
+  for(auto itr_g1 : G1Vec){
+    CipherTextG1::add(inputCheckG1,inputCheckG1,itr_g1);
+  }
+#endif
   omp_set_nested(1);
   omp_set_num_threads(4);
   #pragma omp parallel for
@@ -158,6 +165,12 @@ void searchDBwAHE(uint64_t x,uint64_t y,std::vector<uint64_t>& list,PublicKey& p
     }else{
       vecAns[i] = index;
     }
+#ifdef USEZKP
+    CipherTextG1 inputCheck = inputCheckG1;
+    rn.setRand(rg);
+    CipherTextG1::mul(inputCheck,inputCheck,rn);
+    CipherTextG1::add(vecAns[i],vecAns[i],inputCheck);
+#endif
   }
   std::string s,t;
   std::ofstream ofs(outfile.c_str()); 
@@ -172,6 +185,23 @@ void searchDBwAHE(uint64_t x,uint64_t y,std::vector<uint64_t>& list,PublicKey& p
 void searchDBwSHE(uint64_t x,uint64_t y,uint64_t z,std::vector<uint64_t>& list,PublicKey& pub,std::vector<CipherTextG1>& G1Vec,std::vector<CipherTextG2>& G2Vec,CipherTextGT& cGT,std::string& outfile){
   std::vector<CipherTextGT> vecGT;
   vecGT.resize(z);
+#ifdef USEZKP
+  CipherTextG1 inputCheckG1;
+  pub.enc(inputCheckG1,0);
+  for(auto itr_g1 : G1Vec){
+    CipherTextG1::add(inputCheckG1,inputCheckG1,itr_g1);
+  }
+  CipherTextG2 inputCheckG2;
+  pub.enc(inputCheckG2,0);
+  for(auto itr_g2 : G2Vec){
+    CipherTextG2::add(inputCheckG2,inputCheckG2,itr_g2);
+  }
+  CipherTextGT inputCheckGT;
+  CipherTextGT::mul(inputCheckGT,inputCheckG1,inputCheckG2);
+  CipherTextGT oneGT;
+  pub.enc(oneGT,1);
+  CipherTextGT::sub(inputCheckGT,inputCheckGT,oneGT);
+#endif
   omp_set_nested(1);
   omp_set_num_threads(20);
   #pragma omp parallel for
@@ -204,31 +234,35 @@ void searchDBwSHE(uint64_t x,uint64_t y,uint64_t z,std::vector<uint64_t>& list,P
       }
     }
     CipherTextGT index;
-    CipherTextGT randvec[4];
-    pub.enc(index,i);
+    CipherTextGT rand;
+    pub.encGT(index,i);
     CipherTextGT::sub(index,index,cGT);
-    for(int j=0;j<4;j++){
-      CipherTextGT::mul(randvec[j],index,rg.get64());
-      int count = 64 * j;
-      for(int k=0;k<=j;k++){
-	if(count >= 64){
-	  count -= 63;
-	  CipherTextGT::mul(randvec[j],randvec[j],(int64_t)1<<63);
-	}else{
-	  count = 0;
-	  CipherTextGT::mul(randvec[j],randvec[j],(int64_t)1<<count);
-	}
-      }
-      if(j>0){
-	CipherTextGT::add(randvec[0],randvec[0],randvec[j]);
-      }
+    CipherTextGT indexmemo = index;
+    CipherTextGT::mul(index,index,rg.get64());
+    for(int j=0;j<3;j++){
+      CipherTextGT::mul(index,index,(int64_t)1<<32);
+      CipherTextGT::mul(index,index,(int64_t)1<<32);
+      CipherTextGT::mul(rand,indexmemo,rg.get64());
+      CipherTextGT::add(index,index,rand);
     }
     if(isGT){
       CipherTextGT::finalExp(vecGT[i], vecGT[i]);
-      CipherTextGT::add(vecGT[i],vecGT[i],randvec[0]);
+      CipherTextGT::add(vecGT[i],vecGT[i],index);
     }else{
-      vecGT[i] = randvec[0];
+      vecGT[i] = index;
     }
+#ifdef USEZKP
+    CipherTextGT inputCheck = inputCheckGT;
+    CipherTextGT sum = inputCheckGT;
+    CipherTextGT::mul(inputCheck,inputCheck,rg.get64());
+    for(int j=0;j<3;j++){
+      CipherTextGT::mul(inputCheck,inputCheck,(int64_t)1<<32);
+      CipherTextGT::mul(inputCheck,inputCheck,(int64_t)1<<32);
+      CipherTextGT::mul(rand,sum,rg.get64());
+      CipherTextGT::add(inputCheck,inputCheck,rand);
+    }
+    CipherTextGT::add(vecGT[i],vecGT[i],inputCheck);
+#endif
   }
   std::string s,t;
   std::ofstream ofs(outfile.c_str()); 
